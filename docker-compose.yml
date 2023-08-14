@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: local
+      MYSQL_PASSWORD: local
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  phpmyadmin:
+    image: phpmyadmin:latest
+    links:
+      - db
+    ports:
+      - 8099:80
+    environment:
+      PMA_HOST: db
